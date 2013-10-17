@@ -4,6 +4,7 @@ var servers = require('./config.js').servers,
     cronJob = require('cron').CronJob;
 
 servers.forEach(function(server) {
+  server.failCount = 0;
   server.prevLoginSuccessful = true;
   job = new cronJob({
     cronTime: server.cronTime,
@@ -13,7 +14,7 @@ servers.forEach(function(server) {
         timeout: server.timeout
       }, function (err, res, body) {
         if (err) {
-          if (server.prevLoginSuccessful) {
+          if (server.prevLoginSuccessful && server.failCount >= server.failLimit) {
             console.log('電話の呼び出し中です。');
             lib.makeCall(server.call.from, server.call.tos, server.call.message, function(err) {
               if (err) {
@@ -23,7 +24,9 @@ servers.forEach(function(server) {
             });
             server.prevLoginSuccessful = false;
           }
+          server.failCount += 1;
         } else {
+          server.failCount = 0;
           server.prevLoginSuccessful = true;
           console.log(body);
         }

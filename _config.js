@@ -11,6 +11,7 @@ exports.servers = [
     cronTime: '* * * * *', // 分毎
     url: 'https://example.com/Login', // URL
     timeout: 10000, // タイムアウト設定（ミリ秒）
+    failLimit: 2,
     call: {
       from: '+81000000000', // Twilioで取得（購入）した電話番号
       tos: '+81000000000',
