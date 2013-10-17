@@ -25,6 +25,7 @@ servers.forEach(function(server) {
             server.prevLoginSuccessful = false;
           }
           server.failCount += 1;
+          console.log("Failed " + server.failCount + " times.");
         } else {
           server.failCount = 0;
           server.prevLoginSuccessful = true;
