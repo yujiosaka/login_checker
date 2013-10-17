@@ -14,6 +14,7 @@ servers.forEach(function(server) {
         timeout: server.timeout
       }, function (err, res, body) {
         if (err) {
+          server.failCount += 1;
           if (server.prevLoginSuccessful && server.failCount >= server.failLimit) {
             console.log('電話の呼び出し中です。');
             lib.makeCall(server.call.from, server.call.tos, server.call.message, function(err) {
@@ -24,7 +25,6 @@ servers.forEach(function(server) {
             });
             server.prevLoginSuccessful = false;
           }
-          server.failCount += 1;
           console.log("Failed " + server.failCount + " times.");
         } else {
           server.failCount = 0;
