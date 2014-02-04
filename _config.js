@@ -9,7 +9,7 @@ exports.servers = [
   {
     name: 'デモサイト',
     cronTime: '* * * * *', // 分毎
-    url: 'https://example.com/Login', // URL
+    url: 'https://example.com/', // URL
     timeout: 10000, // タイムアウト設定（ミリ秒）
     failLimit: 2,
     call: {
